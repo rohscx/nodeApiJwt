@@ -24,4 +24,9 @@ app.use(express.json());
 app.use('/api/v1/user', authRoute);
 app.use('/api/v1/posts', postRoute);
 
+// Unknown Routes
+app.use((req, res, next) => {
+    res.status(404).send('ノಠ益ಠノ彡┻━┻  404 page')
+});
+
 app.listen(8080, () => console.log('Server Up and running'));
