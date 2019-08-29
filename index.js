@@ -21,7 +21,7 @@ console.log('connected to db!')
 // Middleware
 app.use(express.json());
 // Route Middlewares
-app.use('/api/user', authRoute);
-app.use('/api/posts', postRoute);
+app.use('/api/v1/user', authRoute);
+app.use('/api/v1/posts', postRoute);
 
 app.listen(8080, () => console.log('Server Up and running'));
