@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const verify = require('./verifyToken');
-const amznConnectReqirements =  require('../../nodeUtilz/app').amznConnectReqirements;
+const amznConnectReqirements =  require('nodeUtilz').amznConnectReqirements;
 const {amazonConnectThroughputValidation} = require('../validation');
 
 router.get('/',verify ,(req, res) => {
