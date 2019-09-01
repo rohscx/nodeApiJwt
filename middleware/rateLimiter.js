@@ -17,7 +17,7 @@ module.exports = function (req, res, next) {
         // requests we set in the constructor
         const remainingRequestsFloor = Math.floor(remainingRequests);
         const depletionErrorMessage = `Rate ${rate} Limit ${every} ${unit} exeeded`;
-        if (remainingRequestsFloor <= 0) return res.status(400).send(depletionErrorMessage + error);
+        if (remainingRequestsFloor <= 0) return res.status(429).send(depletionErrorMessage + error);
         // remainingRequests tells us how many additional requests could be sent
         // right this moment  
         next();
