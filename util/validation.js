@@ -60,6 +60,19 @@ const ipFromStringValidation = (data) => {
     return Joi.validate(data, schema);
 };
 
+const textRecognitionValidation = (data) => {
+    // Cap in bit size
+    const dataSizeCap = (10 * (Math.pow(10,7)));
+    const postErrorMessage = {error: "Post should not Contain Body: Expected Image Form Data"};
+    if (data > dataSizeCap ) {
+        return postErrorMessage;
+    } else {
+        return data;
+    } 
+    
+    
+};
+
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.amazonConnectThroughputValidation = amazonConnectThroughputValidation;
@@ -67,3 +80,4 @@ module.exports.networkScopeValidation = networkScopeValidation;
 module.exports.ciscoOption43Validation = ciscoOption43Validation;
 module.exports.ciscoDecodeOption43Validation = ciscoDecodeOption43Validation;
 module.exports.ipFromStringValidation = ipFromStringValidation;
+module.exports.textRecognitionValidation = textRecognitionValidation;

@@ -63,3 +63,6 @@ typings/
 # Secure Directory / Private Data files
 security/
 security.js
+
+# Uploaded Data
+/uploads/*
