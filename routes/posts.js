@@ -99,6 +99,8 @@ router.post('/textRecognition', rateLimiter, upload.fields([{name:'image', maxCo
     if(!req.files.image || req.files.image.length <= 0) return res.status(400).send();
     const fileMetadata = req.files.image.pop();
     const {destination, mimetype, filename, path, size} = fileMetadata;
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/bmp', 'image/pbm'];
+    if(!allowedMimeTypes.includes(mimetype)) return res.status(400).send(`щ(ﾟДﾟщ) ${mimetype}`);
     // Create a new teseracrtTask
 
     // debug of file Metadata 
@@ -108,6 +110,7 @@ router.post('/textRecognition', rateLimiter, upload.fields([{name:'image', maxCo
         ocrId: filename,
         status: 'null',
         progress: 0000000000,
+        metaData: fileMetadata,
         result: "null",
     });
 

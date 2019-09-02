@@ -17,6 +17,10 @@ const tesseractSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    metaData: {
+        type: Object,
+        required: true,
+    },
     result: {
         type: String,
         required: true,
