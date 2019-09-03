@@ -60,6 +60,14 @@ const ipFromStringValidation = (data) => {
     return Joi.validate(data, schema);
 };
 
+const macFromStringValidation = (data) => {
+    const schema = {
+        string: Joi.string().max(40000).required(),
+        options: Joi.object().required(),
+    };
+    return Joi.validate(data, schema);
+};
+
 const textRecognitionValidation = (data) => {
     // Cap in bit size
     const dataSizeCap = (10 * (Math.pow(10,7)));
@@ -81,3 +89,4 @@ module.exports.ciscoOption43Validation = ciscoOption43Validation;
 module.exports.ciscoDecodeOption43Validation = ciscoDecodeOption43Validation;
 module.exports.ipFromStringValidation = ipFromStringValidation;
 module.exports.textRecognitionValidation = textRecognitionValidation;
+module.exports.macFromStringValidation = macFromStringValidation;

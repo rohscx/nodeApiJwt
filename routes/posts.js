@@ -7,6 +7,7 @@ const networkScope = require('nodeUtilz').networkScope;
 const ciscoOption43 = require('nodeUtilz').ciscoOption43;
 const ciscoDecodeOption43 = require('nodeUtilz').ciscoDecodeOption43;
 const ipFromString = require('nodeUtilz').ipFromString;
+const macFromString = require('nodeUtilz').macFromString;
 const readFile = require('nodeUtilz').readFile;
 const deleteFile = require('nodeUtilz').deleteFile;
 const dirContents = require('nodeUtilz').dirContents;
@@ -17,7 +18,7 @@ const {
     ciscoOption43Validation,
     ciscoDecodeOption43Validation,
     ipFromStringValidation,
-    textRecognitionValidation,
+    macFromStringValidation,
 } = require('../util/validation');
 const multer = require('multer');
 const upload = multer({ 
@@ -92,6 +93,15 @@ router.post('/ipv4FromString', rateLimiter, verify, async (req,res) => {
     const {string} = req.body;
     const ipv4FromString = ipFromString(string);
     res.send(ipv4FromString);
+})
+
+router.post('/macAddressFromString', rateLimiter, verify, async (req,res) => {
+    // LETS VALIDATE THE DATA BEFORE WE pass it into the function
+    const {error} = macFromStringValidation(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
+    const {string,format} = req.body;
+    const macAddressFromString = macFromString(string,format);
+    res.send(macAddressFromString);
 })
 
 router.post('/textRecognition', rateLimiter, upload.fields([{name:'image', maxCount: 1}]), async (req,res) => {
