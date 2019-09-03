@@ -55,7 +55,7 @@ const ciscoDecodeOption43Validation = (data) => {
 
 const ipFromStringValidation = (data) => {
     const schema = {
-        string: Joi.string().max(10000).required(),
+        string: Joi.string().max(40000).required(),
     };
     return Joi.validate(data, schema);
 };
