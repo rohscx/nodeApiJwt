@@ -99,8 +99,9 @@ router.post('/macAddressFromString', rateLimiter, verify, async (req,res) => {
     // LETS VALIDATE THE DATA BEFORE WE pass it into the function
     const {error} = macFromStringValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
-    const {string,format} = req.body;
-    const macAddressFromString = macFromString(string,format);
+    const {string,options} = req.body;
+    console.log(string, options)
+    const macAddressFromString = macFromString(string,options);
     res.send(macAddressFromString);
 })
 
