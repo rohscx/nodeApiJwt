@@ -66,3 +66,6 @@ security.js
 
 # Uploaded Data
 /uploads/*
+
+#
+eng.traineddata
