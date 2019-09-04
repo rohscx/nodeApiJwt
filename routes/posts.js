@@ -54,18 +54,7 @@ router.post('/networkScope', rateLimiter, verify, async (req,res) => {
     if(error) return res.status(400).send(error.details[0].message);
     const {ipV4cidr} = req.body;
     const cidr = await networkScope(ipV4cidr);
-    const {ip, mask, network, hosts, subnets, range, prefix} = cidr.pop();
-    // const networkCidr = network + '/' +(ipV4cidr.split(new RegExp(/(?:(\/))/))[2]); // not needed remove later
-    const newObject = {
-        ip,
-        mask,
-        network,
-        hosts,
-        subnets,
-        range,
-        prefix,
-    }
-    res.send(newObject);
+    res.send(cidr.pop());
 })
 
 router.post('/ciscoOption43', rateLimiter, verify, async (req,res) => {
