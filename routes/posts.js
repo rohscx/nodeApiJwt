@@ -90,8 +90,8 @@ router.post('/ipv4FromString', rateLimiter, verify, async (req,res) => {
     // LETS VALIDATE THE DATA BEFORE WE pass it into the function
     const {error} = ipFromStringValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
-    const {string} = req.body;
-    const ipv4FromString = ipFromString(string);
+    const {string,options} = req.body;
+    const ipv4FromString = ipFromString(string,options);
     res.send(ipv4FromString);
 })
 
@@ -100,7 +100,7 @@ router.post('/macAddressFromString', rateLimiter, verify, async (req,res) => {
     const {error} = macFromStringValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
     const {string,options} = req.body;
-    console.log(string, options)
+    //console.log(string, options)
     const macAddressFromString = macFromString(string,options);
     res.send(macAddressFromString);
 })
