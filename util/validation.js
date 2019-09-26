@@ -84,7 +84,7 @@ const qrCodeValidator = (data) => {
     const schema = {
         string: Joi.string().max(500).required(),
         options: Joi.object({
-            output: Joi.string().valid('terminal','canvas','uri').required(), 
+            output: Joi.string().valid('terminal','html','url').required(), 
             qrOptions: Joi.object()},
             ).required()
     };
