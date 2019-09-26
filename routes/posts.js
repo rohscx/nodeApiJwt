@@ -12,7 +12,6 @@ const readFile = require('nodeUtilz').readFile;
 const deleteFile = require('nodeUtilz').deleteFile;
 const dirContents = require('nodeUtilz').dirContents;
 const textRecognition = require('nodeUtilz').tesseractOcr;
-const qrCode = require('nodeUtilz').qrCode;
 const {
     amazonConnectThroughputValidation,
     networkScopeValidation,
@@ -20,11 +19,8 @@ const {
     ciscoDecodeOption43Validation,
     ipFromStringValidation,
     macFromStringValidation,
-    qrCodeValidator,
 } = require('../util/validation');
 const multer = require('multer');
-
-// Maxium file upload size
 const upload = multer({ 
     dest: 'uploads/' ,
     limits: { fileSize: (10 *(Math.pow(10,6))) },
@@ -40,6 +36,8 @@ router.get('/textRecognition/*',verify, rateLimiter, async (req, res) => {
     const result = await TesseractTask.findOne({ocrId: splitUri[2]})
     res.send(result);
 });
+
+
 
 router.post('/amznConnectThroughputCalc', rateLimiter, async (req,res) => {
     // LETS VALIDATE THE DATA BEFORE WE pass it into the function
@@ -132,6 +130,8 @@ router.post('/textRecognition', rateLimiter, upload.fields([{name:'image', maxCo
     };
     const imageFileData = await readFile(path);
 
+  
+    
     const ocrData = textRecognition(imageFileData, ocrCallBack).then((t) => {
         const result = t;
         TesseractTask.findOne({ocrId: filename}).then((t) => {
@@ -147,18 +147,10 @@ router.post('/textRecognition', rateLimiter, upload.fields([{name:'image', maxCo
             deleteFile(destination+"/"+fE).then(console.log).catch(console.log)
         });
     })
+   
 
     res.send({ocrId: filename});
     //res.send({ocrData});
-})
-
-router.post('/qrCode', rateLimiter, verify, async (req,res) => {
-    // LETS VALIDATE THE DATA BEFORE WE pass it into the function
-    const {error} = qrCodeValidator(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
-    const {string, options} = req.body;
-    const dataAsQrCode = await qrCode(string, options);
-    res.send(dataAsQrCode);
 })
 
 module.exports = router;
