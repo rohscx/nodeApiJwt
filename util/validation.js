@@ -77,9 +77,18 @@ const textRecognitionValidation = (data) => {
         return postErrorMessage;
     } else {
         return data;
-    } 
-    
-    
+    }  
+};
+
+const qrCodeValidator = (data) => {
+    const schema = {
+        string: Joi.string().max(500).required(),
+        options: Joi.object({
+            output: Joi.string().valid('terminal','canvas','uri').required(), 
+            qrOptions: Joi.object()},
+            ).required()
+    };
+    return Joi.validate(data, schema);
 };
 
 module.exports.registerValidation = registerValidation;
@@ -91,3 +100,4 @@ module.exports.ciscoDecodeOption43Validation = ciscoDecodeOption43Validation;
 module.exports.ipFromStringValidation = ipFromStringValidation;
 module.exports.textRecognitionValidation = textRecognitionValidation;
 module.exports.macFromStringValidation = macFromStringValidation;
+module.exports.qrCodeValidator = qrCodeValidator;

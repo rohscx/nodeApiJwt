@@ -19,7 +19,7 @@
     "limiter": "^1.1.4",
     "mongoose": "^5.6.11",
     "multer": "^1.4.2",
-    "nodeUtilz": "git+https://github.com/rohscx/nodeUtilz.git"
+    "nodeutilz": "^1.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
