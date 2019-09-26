@@ -2,17 +2,17 @@ const router = require('express').Router();
 const verify = require('../middleware/verifyToken');
 const rateLimiter = require('../middleware/rateLimiter');
 const TesseractTask = require('../model/TesseractTask');
-const amznConnectReqirements =  require('nodeUtilz').amznConnectReqirements;
-const networkScope = require('nodeUtilz').networkScope;
-const ciscoOption43 = require('nodeUtilz').ciscoOption43;
-const ciscoDecodeOption43 = require('nodeUtilz').ciscoDecodeOption43;
-const ipFromString = require('nodeUtilz').ipFromString;
-const macFromString = require('nodeUtilz').macFromString;
-const readFile = require('nodeUtilz').readFile;
-const deleteFile = require('nodeUtilz').deleteFile;
-const dirContents = require('nodeUtilz').dirContents;
-const textRecognition = require('nodeUtilz').tesseractOcr;
-const qrCode = require('nodeUtilz').qrCode;
+const amznConnectReqirements =  require('nodeutilz').amznConnectReqirements;
+const networkScope = require('nodeutilz').networkScope;
+const ciscoOption43 = require('nodeutilz').ciscoOption43;
+const ciscoDecodeOption43 = require('nodeutilz').ciscoDecodeOption43;
+const ipFromString = require('nodeutilz').ipFromString;
+const macFromString = require('nodeutilz').macFromString;
+const readFile = require('nodeutilz').readFile;
+const deleteFile = require('nodeutilz').deleteFile;
+const dirContents = require('nodeutilz').dirContents;
+const textRecognition = require('nodeutilz').tesseractOcr;
+const qrCode = require('nodeutilz').qrCode;
 const {
     amazonConnectThroughputValidation,
     networkScopeValidation,
