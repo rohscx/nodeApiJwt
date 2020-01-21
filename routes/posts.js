@@ -26,7 +26,7 @@ const multer = require('multer');
 
 // Maxium file upload size
 const upload = multer({ 
-    dest: 'uploads/' ,
+    dest: '/temp/uploads/' ,
     limits: { fileSize: (10 *(Math.pow(10,6))) },
 })
 
