@@ -22,13 +22,13 @@ const {
     macFromStringValidation,
     qrCodeValidator,
 } = require('../util/validation');
-const multer = require('multer');
+// const multer = require('multer');
 
-// Maxium file upload size
-const upload = multer({ 
-    dest: 'uploads/' ,
-    limits: { fileSize: (10 *(Math.pow(10,6))) },
-})
+// // Maxium file upload size
+// const upload = multer({ 
+//     dest: 'uploads/' ,
+//     limits: { fileSize: (10 *(Math.pow(10,6))) },
+// })
 
 router.get('/',verify, rateLimiter, (req, res) => {
     res.send(req.user);
@@ -96,61 +96,61 @@ router.post('/macAddressFromString', rateLimiter, verify, async (req,res) => {
     res.send(macAddressFromString);
 })
 
-router.post('/textRecognition', rateLimiter, upload.fields([{name:'image', maxCount: 1}]), async (req,res) => {
-    // LETS VALIDATE THE DATA BEFORE WE pass it into the function
-    const reqObjectLength = Object.keys(req.body).length;
-    if(reqObjectLength !== 0) return res.status(400).send();
-    if(!req.files.image || req.files.image.length <= 0) return res.status(400).send();
-    const fileMetadata = req.files.image.pop();
-    const {destination, mimetype, filename, path, size} = fileMetadata;
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/bmp', 'image/pbm'];
-    if(!allowedMimeTypes.includes(mimetype)) return res.status(400).send(`щ(ﾟДﾟщ) ${mimetype}`);
-    // Create a new teseracrtTask
+// router.post('/textRecognition', rateLimiter, upload.fields([{name:'image', maxCount: 1}]), async (req,res) => {
+//     // LETS VALIDATE THE DATA BEFORE WE pass it into the function
+//     const reqObjectLength = Object.keys(req.body).length;
+//     if(reqObjectLength !== 0) return res.status(400).send();
+//     if(!req.files.image || req.files.image.length <= 0) return res.status(400).send();
+//     const fileMetadata = req.files.image.pop();
+//     const {destination, mimetype, filename, path, size} = fileMetadata;
+//     const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/bmp', 'image/pbm'];
+//     if(!allowedMimeTypes.includes(mimetype)) return res.status(400).send(`щ(ﾟДﾟщ) ${mimetype}`);
+//     // Create a new teseracrtTask
 
-    // debug of file Metadata 
-    //console.log(fileMetadata)
+//     // debug of file Metadata 
+//     //console.log(fileMetadata)
 
-    const tesseractTask = new TesseractTask({
-        ocrId: filename,
-        status: 'null',
-        progress: 0000000000,
-        metaData: fileMetadata,
-        result: "null",
-    });
+//     const tesseractTask = new TesseractTask({
+//         ocrId: filename,
+//         status: 'null',
+//         progress: 0000000000,
+//         metaData: fileMetadata,
+//         result: "null",
+//     });
 
-    // Checking if the user is already in the database
-    const tesseractTaskExists = await TesseractTask.findOne({ocrId: filename});
-    if(tesseractTaskExists) return res.status(400).send(`crId already exists : ${filename}`);
-    const savedTesseract = await tesseractTask.save();
-    const ocrCallBack = (data) => {
-        const {status, progress} = data;
-        TesseractTask.findOne({ocrId: filename}).then((t) => {
-            t.status = status;
-            t.progress = progress === 1 ? t.progress : progress;
-            t.save();
-        });
-    };
-    const imageFileData = await readFile(path);
+//     // Checking if the user is already in the database
+//     const tesseractTaskExists = await TesseractTask.findOne({ocrId: filename});
+//     if(tesseractTaskExists) return res.status(400).send(`crId already exists : ${filename}`);
+//     const savedTesseract = await tesseractTask.save();
+//     const ocrCallBack = (data) => {
+//         const {status, progress} = data;
+//         TesseractTask.findOne({ocrId: filename}).then((t) => {
+//             t.status = status;
+//             t.progress = progress === 1 ? t.progress : progress;
+//             t.save();
+//         });
+//     };
+//     const imageFileData = await readFile(path);
 
-    const ocrData = textRecognition(imageFileData, ocrCallBack).then((t) => {
-        const result = t;
-        TesseractTask.findOne({ocrId: filename}).then((t) => {
-            t.result = result;
-            t.progress = 1;
-            t.save();
-        }).catch(console.log);
-    })
-    deleteFile(path).then(console.log).catch(console.log);
-    dirContents(destination).then((t) => {
-        console.l
-        if (t.length >= 100) t.forEach((fE) => {
-            deleteFile(destination+"/"+fE).then(console.log).catch(console.log)
-        });
-    })
+//     const ocrData = textRecognition(imageFileData, ocrCallBack).then((t) => {
+//         const result = t;
+//         TesseractTask.findOne({ocrId: filename}).then((t) => {
+//             t.result = result;
+//             t.progress = 1;
+//             t.save();
+//         }).catch(console.log);
+//     })
+//     deleteFile(path).then(console.log).catch(console.log);
+//     dirContents(destination).then((t) => {
+//         console.l
+//         if (t.length >= 100) t.forEach((fE) => {
+//             deleteFile(destination+"/"+fE).then(console.log).catch(console.log)
+//         });
+//     })
 
-    res.send({ocrId: filename});
-    //res.send({ocrData});
-})
+//     res.send({ocrId: filename});
+//     //res.send({ocrData});
+// })
 
 router.post('/qrCode', rateLimiter, verify, async (req,res) => {
     // LETS VALIDATE THE DATA BEFORE WE pass it into the function

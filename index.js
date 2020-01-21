@@ -13,7 +13,10 @@ dotenv.config();
 
 // Connect to DB
 mongoose.connect(process.env.DB_CONNECT,
-{useNewUrlParser: true },() => 
+{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+    },() => 
 console.log('connected to db!')
 );
 
@@ -29,4 +32,4 @@ app.use((req, res, next) => {
     res.status(404).send('ノಠ益ಠノ彡┻━┻  404 page')
 });
 
-app.listen(8080, () => console.log('Server Up and running'));
+app.listen(process.env.PORT, () => console.log('Server Up and running'));
