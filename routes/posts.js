@@ -22,7 +22,7 @@ const {
     macFromStringValidation,
     qrCodeValidator,
 } = require('../util/validation');
-const multer = require('multer');
+// const multer = require('multer');
 
 // // Maxium file upload size
 // const upload = multer({ 
