@@ -25,18 +25,10 @@ const {
 const multer = require('multer');
 
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, `${os.tmpdir()}/my-uploads`)
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now())
-    }
-  })
 
 // Maxium file upload size 10 MB
 const upload = multer({ 
-    storage,
+    storage: Multer.memoryStorage(),
     limits: { fileSize: (10 *(Math.pow(10,6))) },
 })
 
