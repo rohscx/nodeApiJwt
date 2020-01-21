@@ -32,4 +32,4 @@ app.use((req, res, next) => {
     res.status(404).send('ノಠ益ಠノ彡┻━┻  404 page')
 });
 
-app.listen(os.Getenv("PORT"), () => console.log('Server Up and running'));
+app.listen(process.env.PORT, () => console.log('Server Up and running'));
