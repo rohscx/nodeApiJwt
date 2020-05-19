@@ -82,7 +82,7 @@ const textRecognitionValidation = (data) => {
 
 const qrCodeValidator = (data) => {
     const schema = {
-        string: Joi.string().max(500).required(),
+        string: Joi.string().max(4296).required(),
         options: Joi.object({
             output: Joi.string().valid('terminal','html','url').required(), 
             qrOptions: Joi.object()},
