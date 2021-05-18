@@ -13,6 +13,7 @@ const deleteFile = require('nodeutilz').deleteFile;
 const dirContents = require('nodeutilz').dirContents;
 const textRecognition = require('nodeutilz').tesseractOcr;
 const qrCode = require('nodeutilz').qrCode;
+const ouiLookup = require('nodeutilz').ouiLookup;
 const {
     amazonConnectThroughputValidation,
     networkScopeValidation,
@@ -161,4 +162,17 @@ router.post('/qrCode', rateLimiter, verify, async (req,res) => {
     res.send(dataAsQrCode);
 })
 
+router.post('/ouiLookup', rateLimiter, verify, async (req,res) => {
+    // LETS VALIDATE THE DATA BEFORE WE pass it into the function
+    const {error} = macFromStringValidation(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
+    const {string,options} = req.body;
+    const overrideOptions = {
+		"format":[":",2],
+		"case":"upper"
+	}
+    //console.log(string, options)
+    const macAddressFromString = macFromString(string,overrideOptions);
+    ouiLookup(macAddressFromString).then((result) => res.send(result));
+})
 module.exports = router;
