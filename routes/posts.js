@@ -12,8 +12,7 @@ const readFile = require('nodeutilz').readFile;
 const deleteFile = require('nodeutilz').deleteFile;
 const dirContents = require('nodeutilz').dirContents;
 const textRecognition = require('nodeutilz').tesseractOcr;
-const qrCode = require('nodeutilz').qrCode;
-const ouiLookup = require('nodeutilz').ouiLookup;
+// const qrCode = require('nodeutilz').qrCode;
 const {
     amazonConnectThroughputValidation,
     networkScopeValidation,
@@ -21,7 +20,7 @@ const {
     ciscoDecodeOption43Validation,
     ipFromStringValidation,
     macFromStringValidation,
-    qrCodeValidator,
+    // qrCodeValidator,
 } = require('../util/validation');
 // const multer = require('multer');
 
@@ -153,26 +152,14 @@ router.post('/macAddressFromString', rateLimiter, verify, async (req,res) => {
 //     //res.send({ocrData});
 // })
 
-router.post('/qrCode', rateLimiter, verify, async (req,res) => {
-    // LETS VALIDATE THE DATA BEFORE WE pass it into the function
-    const {error} = qrCodeValidator(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
-    const {string, options} = req.body;
-    const dataAsQrCode = await qrCode(string, options);
-    res.send(dataAsQrCode);
-})
+// router.post('/qrCode', rateLimiter, verify, async (req,res) => {
+//     // LETS VALIDATE THE DATA BEFORE WE pass it into the function
+//     const {error} = qrCodeValidator(req.body);
+//     if(error) return res.status(400).send(error.details[0].message);
+//     const {string, options} = req.body;
+//     const dataAsQrCode = await qrCode(string, options);
+//     res.send(dataAsQrCode);
+// })
 
-router.post('/ouiLookup', rateLimiter, verify, async (req,res) => {
-    // LETS VALIDATE THE DATA BEFORE WE pass it into the function
-    const {error} = macFromStringValidation(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
-    const {string,options} = req.body;
-    const overrideOptions = {
-		"format":[":",2],
-		"case":"upper"
-	}
-    //console.log(string, options)
-    const macAddressFromString = macFromString(string,overrideOptions);
-    ouiLookup(macAddressFromString).then((result) => res.send(result));
-})
+
 module.exports = router;
