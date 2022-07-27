@@ -161,4 +161,5 @@ router.post('/macAddressFromString', rateLimiter, verify, async (req,res) => {
 //     res.send(dataAsQrCode);
 // })
 
+
 module.exports = router;
